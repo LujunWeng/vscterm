@@ -95,7 +95,7 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 		super();
 
 		// Restore state
-		this.restorePreviousState();
+		// this.restorePreviousState();
 
 		// Create layout sashes
 		this.sashXOne = new Sash(this.workbenchContainer, this, { baseSize: 5 });
