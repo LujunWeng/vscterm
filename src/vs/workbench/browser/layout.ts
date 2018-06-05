@@ -475,7 +475,7 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 			}
 		}
 		this.storageService.store(WorkbenchLayout.panelSizeBeforeMaximizedKey, this.panelSizeBeforeMaximized, StorageScope.GLOBAL);
-		let panelDimension = new Dimension(panelWidth, panelHeight);
+		const panelDimension = new Dimension(panelWidth, panelHeight);
 
 		// Editor
 		let editorSize = {
@@ -586,11 +586,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 				position(panelContainer, this.titlebarHeight, sidebarSize.width + activityBarSize.width, this.statusbarHeight, editorSize.width);
 			}
 		}
-		hide(editorContainer);
-		panelDimension = new Dimension(this.workbenchSize.width, this.workbenchSize.height + this.titlebarHeight);
-		size(panelContainer, panelDimension.width, panelDimension.height);
-		position(panelContainer, 0, 0, 0, 0);
-		show(panelContainer);
 
 		// Activity Bar Part
 		const activitybarContainer = this.parts.activitybar.getContainer();
@@ -607,7 +602,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 		} else {
 			show(activitybarContainer);
 		}
-		hide(activitybarContainer);
 
 		// Sidebar Part
 		const sidebarContainer = this.parts.sidebar.getContainer();
@@ -618,7 +612,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 		} else {
 			position(sidebarContainer, this.titlebarHeight, activityBarSize.width, this.statusbarHeight, editorAndPanelWidth);
 		}
-		hide(sidebarContainer);
 
 		// Statusbar Part
 		const statusbarContainer = this.parts.statusbar.getContainer();
@@ -628,7 +621,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 		} else {
 			show(statusbarContainer);
 		}
-		hide(statusbarContainer);
 
 		// Quick open
 		this.quickopen.layout(this.workbenchSize);
@@ -661,6 +653,16 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 
 		// Propagate to Context View
 		this.contextViewService.layout();
+
+		hide(activitybarContainer);
+		hide(sidebarContainer);
+		hide(statusbarContainer);
+		hide(editorContainer);
+		const newPanelDimension = new Dimension(this.workbenchSize.width, this.workbenchSize.height + this.titlebarHeight);
+		size(panelContainer, newPanelDimension.width, newPanelDimension.height);
+		position(panelContainer, 0, 0, 0, 0);
+		show(panelContainer);
+		this.parts.panel.layout(newPanelDimension);
 	}
 
 	getVerticalSashTop(sash: Sash): number {
