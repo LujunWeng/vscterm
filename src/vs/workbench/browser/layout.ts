@@ -407,135 +407,17 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 		}));
 	}
 
+	/* Compute size and position of parts and render them on DOM on change */
 	layout(options?: ILayoutOptions): void {
 		this.workbenchSize = getClientArea(this.parent);
 
-		const isActivityBarHidden = !this.partService.isVisible(Parts.ACTIVITYBAR_PART);
 		const isTitlebarHidden = !this.partService.isVisible(Parts.TITLEBAR_PART);
-		const isPanelHidden = !this.partService.isVisible(Parts.PANEL_PART);
 		const isStatusbarHidden = !this.partService.isVisible(Parts.STATUSBAR_PART);
-		const isSidebarHidden = !this.partService.isVisible(Parts.SIDEBAR_PART);
-		const sidebarPosition = this.partService.getSideBarPosition();
 		const panelPosition = this.partService.getPanelPosition();
 
-		// Sidebar
-		if (this.sidebarWidth === -1) {
-			this.sidebarWidth = this.workbenchSize.width / 5;
-		}
 
 		this.statusbarHeight = isStatusbarHidden ? 0 : this.partLayoutInfo.statusbar.height;
 		this.titlebarHeight = isTitlebarHidden ? 0 : this.partLayoutInfo.titlebar.height / getZoomFactor(); // adjust for zoom prevention
-
-		this.sidebarHeight = this.workbenchSize.height - this.statusbarHeight - this.titlebarHeight;
-		let sidebarSize = new Dimension(this.sidebarWidth, this.sidebarHeight);
-
-		// Activity Bar
-		let activityBarSize = new Dimension(this.activitybarWidth, sidebarSize.height);
-
-		// Panel part
-		let panelHeight: number;
-		let panelWidth: number;
-		const maxPanelHeight = this.computeMaxPanelHeight();
-		const maxPanelWidth = this.computeMaxPanelWidth();
-
-		if (isPanelHidden) {
-			panelHeight = 0;
-			panelWidth = 0;
-		} else if (panelPosition === Position.BOTTOM) {
-			if (this.panelHeight > 0) {
-				panelHeight = Math.min(maxPanelHeight, Math.max(this.partLayoutInfo.panel.minHeight, this.panelHeight));
-			} else {
-				panelHeight = sidebarSize.height * DEFAULT_PANEL_SIZE_COEFFICIENT;
-			}
-			panelWidth = this.workbenchSize.width - sidebarSize.width - activityBarSize.width;
-
-			if (options && options.toggleMaximizedPanel) {
-				panelHeight = this.panelMaximized ? Math.max(this.partLayoutInfo.panel.minHeight, Math.min(this.panelSizeBeforeMaximized, maxPanelHeight)) : maxPanelHeight;
-			}
-
-			this.panelMaximized = panelHeight === maxPanelHeight;
-			if (panelHeight / maxPanelHeight < PANEL_SIZE_BEFORE_MAXIMIZED_BOUNDARY) {
-				this.panelSizeBeforeMaximized = panelHeight;
-			}
-		} else {
-			panelHeight = sidebarSize.height;
-			if (this.panelWidth > 0) {
-				panelWidth = Math.min(maxPanelWidth, Math.max(this.partLayoutInfo.panel.minWidth, this.panelWidth));
-			} else {
-				panelWidth = (this.workbenchSize.width - activityBarSize.width - sidebarSize.width) * DEFAULT_PANEL_SIZE_COEFFICIENT;
-			}
-
-			if (options && options.toggleMaximizedPanel) {
-				panelWidth = this.panelMaximized ? Math.max(this.partLayoutInfo.panel.minWidth, Math.min(this.panelSizeBeforeMaximized, maxPanelWidth)) : maxPanelWidth;
-			}
-
-			this.panelMaximized = panelWidth === maxPanelWidth;
-			if (panelWidth / maxPanelWidth < PANEL_SIZE_BEFORE_MAXIMIZED_BOUNDARY) {
-				this.panelSizeBeforeMaximized = panelWidth;
-			}
-		}
-		this.storageService.store(WorkbenchLayout.panelSizeBeforeMaximizedKey, this.panelSizeBeforeMaximized, StorageScope.GLOBAL);
-		const panelDimension = new Dimension(panelWidth, panelHeight);
-
-		// Editor
-		let editorSize = {
-			width: 0,
-			height: 0
-		};
-
-		editorSize.width = this.workbenchSize.width - sidebarSize.width - activityBarSize.width - (panelPosition === Position.RIGHT ? panelDimension.width : 0);
-		editorSize.height = sidebarSize.height - (panelPosition === Position.BOTTOM ? panelDimension.height : 0);
-
-		// Adjust for Editor Part preferred width
-		const preferredEditorPartSize = this.parts.editor.preferredSize;
-		if (editorSize.width < preferredEditorPartSize.width) {
-			const missingPreferredEditorWidth = preferredEditorPartSize.width - editorSize.width;
-			let outstandingMissingPreferredEditorWidth = missingPreferredEditorWidth;
-
-			// Take from Panel if Panel Position on the Right and Visible
-			if (!isPanelHidden && panelPosition === Position.RIGHT && (!options || options.source !== Parts.PANEL_PART)) {
-				const oldPanelWidth = panelDimension.width;
-				panelDimension.width = Math.max(this.partLayoutInfo.panel.minWidth, panelDimension.width - outstandingMissingPreferredEditorWidth);
-				outstandingMissingPreferredEditorWidth -= oldPanelWidth - panelDimension.width;
-			}
-
-			// Take from Sidebar if Visible
-			if (!isSidebarHidden && outstandingMissingPreferredEditorWidth > 0) {
-				const oldSidebarWidth = sidebarSize.width;
-				sidebarSize.width = Math.max(this.partLayoutInfo.sidebar.minWidth, sidebarSize.width - outstandingMissingPreferredEditorWidth);
-				outstandingMissingPreferredEditorWidth -= oldSidebarWidth - sidebarSize.width;
-			}
-
-			editorSize.width += missingPreferredEditorWidth - outstandingMissingPreferredEditorWidth;
-			if (!isPanelHidden && panelPosition === Position.BOTTOM) {
-				panelDimension.width = editorSize.width; // ensure panel width is always following editor width
-			}
-		}
-
-		// Adjust for Editor Part preferred height
-		if (editorSize.height < preferredEditorPartSize.height) {
-			const missingPreferredEditorHeight = preferredEditorPartSize.height - editorSize.height;
-			let outstandingMissingPreferredEditorHeight = missingPreferredEditorHeight;
-
-			// Take from Panel if Panel Position on the Bottom and Visible
-			if (!isPanelHidden && panelPosition === Position.BOTTOM) {
-				const oldPanelHeight = panelDimension.height;
-				panelDimension.height = Math.max(this.partLayoutInfo.panel.minHeight, panelDimension.height - outstandingMissingPreferredEditorHeight);
-				outstandingMissingPreferredEditorHeight -= oldPanelHeight - panelDimension.height;
-			}
-
-			editorSize.height += missingPreferredEditorHeight - outstandingMissingPreferredEditorHeight;
-		}
-
-		if (!isPanelHidden) {
-			if (panelPosition === Position.BOTTOM) {
-				this.panelHeight = panelDimension.height;
-				this.storageService.store(WorkbenchLayout.sashYHeightSettingsKey, this.panelHeight, StorageScope.GLOBAL);
-			} else {
-				this.panelWidth = panelDimension.width;
-				this.storageService.store(WorkbenchLayout.sashXTwoWidthSettingsKey, this.panelWidth, StorageScope.GLOBAL);
-			}
-		}
 
 		// Workbench
 		position(this.workbenchContainer, 0, 0, 0, 0, 'relative');
@@ -550,48 +432,13 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 			workbenchContainer.scrollLeft = 0;
 		}
 
-		// Editor Part and Panel part
-		const editorContainer = this.parts.editor.getContainer();
-		const panelContainer = this.parts.panel.getContainer();
-		size(editorContainer, editorSize.width, editorSize.height);
-		size(panelContainer, panelDimension.width, panelDimension.height);
-
-		if (panelPosition === Position.BOTTOM) {
-			if (sidebarPosition === Position.LEFT) {
-				position(editorContainer, this.titlebarHeight, 0, this.statusbarHeight + panelDimension.height, sidebarSize.width + activityBarSize.width);
-				position(panelContainer, editorSize.height + this.titlebarHeight, 0, this.statusbarHeight, sidebarSize.width + activityBarSize.width);
-			} else {
-				position(editorContainer, this.titlebarHeight, sidebarSize.width, this.statusbarHeight + panelDimension.height, 0);
-				position(panelContainer, editorSize.height + this.titlebarHeight, sidebarSize.width, this.statusbarHeight, 0);
-			}
-		} else {
-			if (sidebarPosition === Position.LEFT) {
-				position(editorContainer, this.titlebarHeight, panelDimension.width, this.statusbarHeight, sidebarSize.width + activityBarSize.width);
-				position(panelContainer, this.titlebarHeight, 0, this.statusbarHeight, sidebarSize.width + activityBarSize.width + editorSize.width);
-			} else {
-				position(editorContainer, this.titlebarHeight, sidebarSize.width + activityBarSize.width + panelWidth, this.statusbarHeight, 0);
-				position(panelContainer, this.titlebarHeight, sidebarSize.width + activityBarSize.width, this.statusbarHeight, editorSize.width);
-			}
-		}
-
 		// Statusbar Part
 		const statusbarContainer = this.parts.statusbar.getContainer();
 		position(statusbarContainer, this.workbenchSize.height - this.statusbarHeight);
-		if (isStatusbarHidden) {
-			hide(statusbarContainer);
-		} else {
-			show(statusbarContainer);
-		}
+		hide(statusbarContainer);
 
 		// Quick open
 		this.quickopen.layout(this.workbenchSize);
-
-		// Quick input
-		this.quickInput.layout(this.workbenchSize);
-
-		// Notifications
-		this.notificationsCenter.layout(this.workbenchSize);
-		this.notificationsToasts.layout(this.workbenchSize);
 
 		// Sashes
 		this.sashXOne.layout();
@@ -605,15 +452,10 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 			this.sashXTwo.show();
 		}
 
-		// Propagate to Part Layouts
-		this.parts.editor.layout(new Dimension(editorSize.width, editorSize.height));
-		this.parts.panel.layout(panelDimension);
-
 		// Propagate to Context View
 		this.contextViewService.layout();
 
-		hide(statusbarContainer);
-		hide(editorContainer);
+		const panelContainer = this.parts.panel.getContainer();
 		const newPanelDimension = new Dimension(this.workbenchSize.width, this.workbenchSize.height + this.titlebarHeight);
 		size(panelContainer, newPanelDimension.width, newPanelDimension.height);
 		position(panelContainer, 0, 0, 0, 0);
