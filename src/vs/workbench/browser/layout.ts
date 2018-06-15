@@ -582,22 +582,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 			}
 		}
 
-		// Activity Bar Part
-		const activitybarContainer = this.parts.activitybar.getContainer();
-		size(activitybarContainer, null, activityBarSize.height);
-		if (sidebarPosition === Position.LEFT) {
-			this.parts.activitybar.getContainer().style.right = '';
-			position(activitybarContainer, this.titlebarHeight, null, 0, 0);
-		} else {
-			this.parts.activitybar.getContainer().style.left = '';
-			position(activitybarContainer, this.titlebarHeight, 0, 0, null);
-		}
-		if (isActivityBarHidden) {
-			hide(activitybarContainer);
-		} else {
-			show(activitybarContainer);
-		}
-
 		// Statusbar Part
 		const statusbarContainer = this.parts.statusbar.getContainer();
 		position(statusbarContainer, this.workbenchSize.height - this.statusbarHeight);
@@ -633,12 +617,10 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 		this.parts.titlebar.layout(new Dimension(this.workbenchSize.width, this.titlebarHeight));
 		this.parts.editor.layout(new Dimension(editorSize.width, editorSize.height));
 		this.parts.panel.layout(panelDimension);
-		this.parts.activitybar.layout(activityBarSize);
 
 		// Propagate to Context View
 		this.contextViewService.layout();
 
-		hide(activitybarContainer);
 		hide(statusbarContainer);
 		hide(editorContainer);
 		const newPanelDimension = new Dimension(this.workbenchSize.width, this.workbenchSize.height + this.titlebarHeight);
