@@ -527,11 +527,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 			editorSize.height += missingPreferredEditorHeight - outstandingMissingPreferredEditorHeight;
 		}
 
-		if (!isSidebarHidden) {
-			this.sidebarWidth = sidebarSize.width;
-			this.storageService.store(WorkbenchLayout.sashXOneWidthSettingsKey, this.sidebarWidth, StorageScope.GLOBAL);
-		}
-
 		if (!isPanelHidden) {
 			if (panelPosition === Position.BOTTOM) {
 				this.panelHeight = panelDimension.height;
@@ -603,16 +598,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 			show(activitybarContainer);
 		}
 
-		// Sidebar Part
-		const sidebarContainer = this.parts.sidebar.getContainer();
-		size(sidebarContainer, sidebarSize.width, sidebarSize.height);
-		const editorAndPanelWidth = editorSize.width + (panelPosition === Position.RIGHT ? panelWidth : 0);
-		if (sidebarPosition === Position.LEFT) {
-			position(sidebarContainer, this.titlebarHeight, editorAndPanelWidth, this.statusbarHeight, activityBarSize.width);
-		} else {
-			position(sidebarContainer, this.titlebarHeight, activityBarSize.width, this.statusbarHeight, editorAndPanelWidth);
-		}
-
 		// Statusbar Part
 		const statusbarContainer = this.parts.statusbar.getContainer();
 		position(statusbarContainer, this.workbenchSize.height - this.statusbarHeight);
@@ -647,7 +632,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 		// Propagate to Part Layouts
 		this.parts.titlebar.layout(new Dimension(this.workbenchSize.width, this.titlebarHeight));
 		this.parts.editor.layout(new Dimension(editorSize.width, editorSize.height));
-		this.parts.sidebar.layout(sidebarSize);
 		this.parts.panel.layout(panelDimension);
 		this.parts.activitybar.layout(activityBarSize);
 
@@ -655,7 +639,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 		this.contextViewService.layout();
 
 		hide(activitybarContainer);
-		hide(sidebarContainer);
 		hide(statusbarContainer);
 		hide(editorContainer);
 		const newPanelDimension = new Dimension(this.workbenchSize.width, this.workbenchSize.height + this.titlebarHeight);
