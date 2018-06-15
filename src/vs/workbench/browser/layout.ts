@@ -550,14 +550,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 			workbenchContainer.scrollLeft = 0;
 		}
 
-		// Title Part
-		const titleContainer = this.parts.titlebar.getContainer();
-		if (isTitlebarHidden) {
-			hide(titleContainer);
-		} else {
-			show(titleContainer);
-		}
-
 		// Editor Part and Panel part
 		const editorContainer = this.parts.editor.getContainer();
 		const panelContainer = this.parts.panel.getContainer();
@@ -614,7 +606,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 		}
 
 		// Propagate to Part Layouts
-		this.parts.titlebar.layout(new Dimension(this.workbenchSize.width, this.titlebarHeight));
 		this.parts.editor.layout(new Dimension(editorSize.width, editorSize.height));
 		this.parts.panel.layout(panelDimension);
 
