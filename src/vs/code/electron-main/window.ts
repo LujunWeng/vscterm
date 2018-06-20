@@ -462,11 +462,7 @@ export class CodeWindow implements ICodeWindow {
 	}
 
 	private onConfigurationUpdated(): void {
-		const newMenuBarVisibility = this.getMenuBarVisibility();
-		if (newMenuBarVisibility !== this.currentMenuBarVisibility) {
-			this.currentMenuBarVisibility = newMenuBarVisibility;
-			this.setMenuBarVisibility(newMenuBarVisibility);
-		}
+		this.setMenuBarVisibility('hidden');
 
 		// Swipe command support (macOS)
 		if (isMacintosh) {
