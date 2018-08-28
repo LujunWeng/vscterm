@@ -266,8 +266,7 @@ export class PanelPart extends CompositePart<Panel> implements IPanelService {
 				// adjust height for global actions showing
 				availableWidth = Math.max(PanelPart.MIN_COMPOSITE_BAR_WIDTH, availableWidth - this.getToolbarWidth());
 			}
-			// this.compositeBar.layout(new Dimension(availableWidth, this.dimension.height));
-			this.compositeBar.layout(new Dimension(0, 0));
+			this.compositeBar.layout(new Dimension(availableWidth, this.dimension.height));
 		}
 	}
 
