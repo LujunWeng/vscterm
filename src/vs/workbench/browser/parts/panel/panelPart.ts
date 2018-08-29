@@ -32,6 +32,7 @@ import { Dimension } from 'vs/base/browser/dom';
 import { localize } from 'vs/nls';
 import { dispose, IDisposable } from 'vs/base/common/lifecycle';
 import { RawContextKey, IContextKey, IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
+import { TERMINAL_PANEL_ID } from '../../../parts/terminal/common/terminal';
 
 const ActivePanleContextId = 'activePanel';
 export const ActivePanelContext = new RawContextKey<string>(ActivePanleContextId, '');
@@ -260,14 +261,7 @@ export class PanelPart extends CompositePart<Panel> implements IPanelService {
 	}
 
 	private layoutCompositeBar(): void {
-		if (this.dimension) {
-			let availableWidth = this.dimension.width - 40; // take padding into account
-			if (this.toolBar) {
-				// adjust height for global actions showing
-				availableWidth = Math.max(PanelPart.MIN_COMPOSITE_BAR_WIDTH, availableWidth - this.getToolbarWidth());
-			}
-			this.compositeBar.layout(new Dimension(availableWidth, this.dimension.height));
-		}
+		return;
 	}
 
 	private getCompositeActions(compositeId: string): { activityAction: PanelActivityAction, pinnedAction: ToggleCompositePinnedAction } {
