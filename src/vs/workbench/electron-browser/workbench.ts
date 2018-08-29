@@ -678,9 +678,11 @@ export class Workbench extends Disposable implements IPartService {
 		// Restore Panel
 		const panelRegistry = Registry.as<PanelRegistry>(PanelExtensions.Panels);
 		const panelId = this.storageService.get(PanelPart.activePanelSettingsKey, StorageScope.WORKSPACE, panelRegistry.getDefaultPanelId());
-		if (!this.panelHidden && !!panelId) {
-			restorePromises.push(this.panelPart.openPanel(panelId, false));
-		}
+		// if (!this.panelHidden && !!panelId) {
+		// 	restorePromises.push(this.panelPart.openPanel(panelId, false));
+		// }
+		// Panel always displays
+		restorePromises.push(this.panelPart.openPanel(panelId, false));
 
 		// Restore Zen Mode if active
 		if (this.storageService.getBoolean(Workbench.zenModeActiveStorageKey, StorageScope.WORKSPACE, false)) {
