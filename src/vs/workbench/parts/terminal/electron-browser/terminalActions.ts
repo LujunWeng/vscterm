@@ -72,7 +72,8 @@ export class KillTerminalAction extends Action {
 
 	public run(event?: any): TPromise<any> {
 		let terminalInstance = this.terminalService.getActiveInstance();
-		if (terminalInstance) {
+		// Do not kill terminal instance when there is only one.
+		if (terminalInstance && this.terminalService.terminalInstances.length > 1) {
 			this.terminalService.getActiveInstance().dispose();
 			if (this.terminalService.terminalInstances.length > 0) {
 				this.terminalService.showPanel(true);
