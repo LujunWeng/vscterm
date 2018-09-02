@@ -7,7 +7,4 @@ I created this repo because the integrated terminal is [great](https://github.co
 * :runner: Remove not used services for unrelevant parts like Status Bar etc.
 
 ## License
-
-Copyright (c) Microsoft Corporation. All rights reserved.
-
 Licensed under the [MIT](LICENSE.txt) License.
