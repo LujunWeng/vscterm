@@ -809,47 +809,11 @@ export class Workbench extends Disposable implements IPartService {
 	}
 
 	private initSettings(): void {
-
-		// Sidebar visibility
-		this.sideBarHidden = this.storageService.getBoolean(Workbench.sidebarHiddenStorageKey, StorageScope.WORKSPACE, this.contextService.getWorkbenchState() === WorkbenchState.EMPTY);
-
-		// Panel part visibility
-		const panelRegistry = Registry.as<PanelRegistry>(PanelExtensions.Panels);
-		this.panelHidden = this.storageService.getBoolean(Workbench.panelHiddenStorageKey, StorageScope.WORKSPACE, true);
-		if (!panelRegistry.getDefaultPanelId()) {
-			this.panelHidden = true; // we hide panel part if there is no default panel
-		}
-
-		// Sidebar position
-		const sideBarPosition = this.configurationService.getValue<string>(Workbench.sidebarPositionConfigurationKey);
-		this.sideBarPosition = (sideBarPosition === 'right') ? Position.RIGHT : Position.LEFT;
-
 		// Panel position
 		this.setPanelPositionFromStorageOrConfig();
 
-		// Statusbar visibility
-		const statusBarVisible = this.configurationService.getValue<string>(Workbench.statusbarVisibleConfigurationKey);
-		this.statusBarHidden = !statusBarVisible;
-
-		// Activity bar visibility
-		const activityBarVisible = this.configurationService.getValue<string>(Workbench.activityBarVisibleConfigurationKey);
-		this.activityBarHidden = !activityBarVisible;
-
 		// Font aliasing
 		this.fontAliasing = this.configurationService.getValue<FontAliasingOption>(Workbench.fontAliasingConfigurationKey);
-
-		// Zen mode
-		this.zenMode = {
-			active: false,
-			transitionedToFullScreen: false,
-			transitionedToCenteredEditorLayout: false,
-			wasSideBarVisible: false,
-			wasPanelVisible: false,
-			transitionDisposeables: []
-		};
-
-		// Centered Editor Layout
-		this.centeredEditorLayoutActive = false;
 	}
 
 	private setPanelPositionFromStorageOrConfig() {
