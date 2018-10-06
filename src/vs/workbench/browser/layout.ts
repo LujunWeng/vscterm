@@ -411,10 +411,6 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 	layout(options?: ILayoutOptions): void {
 		this.workbenchSize = getClientArea(this.parent);
 
-		// Deletion of the following two lines will break render process. WHY?
-		const isTitlebarHidden = !this.partService.isVisible(Parts.TITLEBAR_PART);
-		this.titlebarHeight = isTitlebarHidden ? 0 : this.partLayoutInfo.titlebar.height / getZoomFactor(); // adjust for zoom prevention
-
 		// Workbench
 		position(this.workbenchContainer, 0, 0, 0, 0, 'relative');
 		size(this.workbenchContainer, this.workbenchSize.width, this.workbenchSize.height);
@@ -450,7 +446,7 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 		this.contextViewService.layout();
 
 		const panelContainer = this.parts.panel.getContainer();
-		const newPanelDimension = new Dimension(this.workbenchSize.width, this.workbenchSize.height + this.titlebarHeight);
+		const newPanelDimension = new Dimension(this.workbenchSize.width, this.workbenchSize.height);
 		size(panelContainer, newPanelDimension.width, newPanelDimension.height);
 		position(panelContainer, 0, 0, 0, 0);
 		show(panelContainer);
