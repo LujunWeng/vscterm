@@ -427,24 +427,10 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 		// Quick open
 		this.quickopen.layout(this.workbenchSize);
 
-		// Panel layout
-		const panelPosition = this.partService.getPanelPosition();
-
-		// Sashes
-		this.sashXOne.layout();
-		if (panelPosition === Position.BOTTOM) {
-			this.sashXTwo.hide();
-			this.sashY.layout();
-			this.sashY.show();
-		} else {
-			this.sashY.hide();
-			this.sashXTwo.layout();
-			this.sashXTwo.show();
-		}
-
 		// Propagate to Context View
 		this.contextViewService.layout();
 
+		// Panel
 		const panelContainer = this.parts.panel.getContainer();
 		const newPanelDimension = new Dimension(this.workbenchSize.width, this.workbenchSize.height);
 		size(panelContainer, newPanelDimension.width, newPanelDimension.height);
