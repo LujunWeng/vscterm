@@ -960,50 +960,13 @@ export class Workbench extends Disposable implements IPartService {
 		}
 
 		// Create Parts
-		this.createTitlebarPart();
-		this.createActivityBarPart();
-		this.createSidebarPart();
-		this.createEditorPart();
 		this.createPanelPart();
-		this.createStatusbarPart();
 
 		// Notification Handlers
-		this.createNotificationsHandlers();
+		//this.createNotificationsHandlers();
 
 		// Add Workbench to DOM
 		this.workbenchContainer.build(this.container);
-	}
-
-	private createTitlebarPart(): void {
-		const titlebarContainer = $(this.workbench).div({
-			'class': ['part', 'titlebar'],
-			id: Identifiers.TITLEBAR_PART,
-			role: 'contentinfo'
-		});
-
-		this.titlebarPart.create(titlebarContainer.getHTMLElement());
-	}
-
-	private createActivityBarPart(): void {
-		const activitybarPartContainer = $(this.workbench)
-			.div({
-				'class': ['part', 'activitybar', this.sideBarPosition === Position.LEFT ? 'left' : 'right'],
-				id: Identifiers.ACTIVITYBAR_PART,
-				role: 'navigation'
-			});
-
-		this.activitybarPart.create(activitybarPartContainer.getHTMLElement());
-	}
-
-	private createSidebarPart(): void {
-		const sidebarPartContainer = $(this.workbench)
-			.div({
-				'class': ['part', 'sidebar', this.sideBarPosition === Position.LEFT ? 'left' : 'right'],
-				id: Identifiers.SIDEBAR_PART,
-				role: 'complementary'
-			});
-
-		this.sidebarPart.create(sidebarPartContainer.getHTMLElement());
 	}
 
 	private createPanelPart(): void {
@@ -1015,27 +978,6 @@ export class Workbench extends Disposable implements IPartService {
 			});
 
 		this.panelPart.create(panelPartContainer.getHTMLElement());
-	}
-
-	private createEditorPart(): void {
-		const editorContainer = $(this.workbench)
-			.div({
-				'class': ['part', 'editor'],
-				id: Identifiers.EDITOR_PART,
-				role: 'main'
-			});
-
-		this.editorPart.create(editorContainer.getHTMLElement());
-	}
-
-	private createStatusbarPart(): void {
-		const statusbarContainer = $(this.workbench).div({
-			'class': ['part', 'statusbar'],
-			id: Identifiers.STATUSBAR_PART,
-			role: 'contentinfo'
-		});
-
-		this.statusbarPart.create(statusbarContainer.getHTMLElement());
 	}
 
 	private createNotificationsHandlers(): void {

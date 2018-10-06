@@ -574,9 +574,9 @@ export class QuickOpenController extends Component implements IQuickOpenService 
 			}
 		}
 
-		if (reason !== HideReason.FOCUS_LOST) {
-			this.editorGroupService.activeGroup.focus(); // focus back to editor group unless user clicked somewhere else
-		}
+		// if (reason !== HideReason.FOCUS_LOST) {
+		// 	this.editorGroupService.activeGroup.focus(); // focus back to editor group unless user clicked somewhere else
+		// }
 
 		// Reset context keys
 		this.resetQuickOpenContextKeys();
