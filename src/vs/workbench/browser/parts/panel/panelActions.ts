@@ -108,6 +108,12 @@ export class TogglePanelPositionAction extends Action {
 
 	public run(): TPromise<any> {
 		const position = this.partService.getPanelPosition();
+
+		// Hacking to show icon properly. I know, it is somewhot anti-logic
+		const positionRight = this.partService.getPanelPosition() === Position.RIGHT;
+		this.class = positionRight ? 'move-panel-to-right' : 'move-panel-to-bottom';
+		this.label = positionRight ? TogglePanelPositionAction.MOVE_TO_RIGHT_LABEL : TogglePanelPositionAction.MOVE_TO_BOTTOM_LABEL;
+
 		return this.partService.setPanelPosition(position === Position.BOTTOM ? Position.RIGHT : Position.BOTTOM);
 	}
 

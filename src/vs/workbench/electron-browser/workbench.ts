@@ -537,11 +537,11 @@ export class Workbench extends Disposable implements IPartService {
 	}
 
 	private onDidUpdateConfiguration(skipLayout?: boolean): void {
-		const newSidebarPositionValue = this.configurationService.getValue<string>(Workbench.sidebarPositionConfigurationKey);
-		const newSidebarPosition = (newSidebarPositionValue === 'right') ? Position.RIGHT : Position.LEFT;
-		if (newSidebarPosition !== this.getSideBarPosition()) {
-			this.setSideBarPosition(newSidebarPosition);
-		}
+		// const newSidebarPositionValue = this.configurationService.getValue<string>(Workbench.sidebarPositionConfigurationKey);
+		// const newSidebarPosition = (newSidebarPositionValue === 'right') ? Position.RIGHT : Position.LEFT;
+		// if (newSidebarPosition !== this.getSideBarPosition()) {
+		// 	this.setSideBarPosition(newSidebarPosition);
+		// }
 
 		this.setPanelPositionFromStorageOrConfig();
 
@@ -550,17 +550,17 @@ export class Workbench extends Disposable implements IPartService {
 			this.setFontAliasing(fontAliasing);
 		}
 
-		if (!this.zenMode.active) {
-			const newStatusbarHiddenValue = !this.configurationService.getValue<boolean>(Workbench.statusbarVisibleConfigurationKey);
-			if (newStatusbarHiddenValue !== this.statusBarHidden) {
-				this.setStatusBarHidden(newStatusbarHiddenValue, skipLayout);
-			}
+		// if (!this.zenMode.active) {
+		// 	const newStatusbarHiddenValue = !this.configurationService.getValue<boolean>(Workbench.statusbarVisibleConfigurationKey);
+		// 	if (newStatusbarHiddenValue !== this.statusBarHidden) {
+		// 		this.setStatusBarHidden(newStatusbarHiddenValue, skipLayout);
+		// 	}
 
-			const newActivityBarHiddenValue = !this.configurationService.getValue<boolean>(Workbench.activityBarVisibleConfigurationKey);
-			if (newActivityBarHiddenValue !== this.activityBarHidden) {
-				this.setActivityBarHidden(newActivityBarHiddenValue, skipLayout);
-			}
-		}
+		// 	const newActivityBarHiddenValue = !this.configurationService.getValue<boolean>(Workbench.activityBarVisibleConfigurationKey);
+		// 	if (newActivityBarHiddenValue !== this.activityBarHidden) {
+		// 		this.setActivityBarHidden(newActivityBarHiddenValue, skipLayout);
+		// 	}
+		// }
 	}
 
 	//#endregion
