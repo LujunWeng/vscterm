@@ -206,8 +206,14 @@ export class PanelPart extends CompositePart<Panel> implements IPanelService {
 		}
 	}
 
+	// List of available panel actions
 	protected getActions(): IAction[] {
-		return [];
+		return [
+			this.instantiationService.createInstance(
+				TogglePanelPositionAction,
+				TogglePanelPositionAction.ID,
+				TogglePanelPositionAction.LABEL)
+			];
 	}
 
 	public getActivePanel(): IPanel {
