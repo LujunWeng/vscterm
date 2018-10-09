@@ -249,13 +249,7 @@ export class PanelPart extends CompositePart<Panel> implements IPanelService {
 		if (!this.partService.isVisible(Parts.PANEL_PART)) {
 			return [dimension];
 		}
-
-		if (this.partService.getPanelPosition() === Position.RIGHT) {
-			// Take into account the 1px border when layouting
-			this.dimension = new Dimension(dimension.width - 1, dimension.height);
-		} else {
-			this.dimension = dimension;
-		}
+		this.dimension = dimension;
 		const sizes = super.layout(this.dimension);
 		this.layoutCompositeBar();
 
@@ -263,7 +257,14 @@ export class PanelPart extends CompositePart<Panel> implements IPanelService {
 	}
 
 	private layoutCompositeBar(): void {
-		return;
+		if (this.dimension) {
+			let availableWidth = this.dimension.width - 40; // take padding into account
+			if (this.toolBar) {
+				// adjust height for global actions showing
+				availableWidth = Math.max(PanelPart.MIN_COMPOSITE_BAR_WIDTH, availableWidth - this.getToolbarWidth());
+			}
+			this.compositeBar.layout(new Dimension(availableWidth, this.dimension.height));
+		}
 	}
 
 	private getCompositeActions(compositeId: string): { activityAction: PanelActivityAction, pinnedAction: ToggleCompositePinnedAction } {
