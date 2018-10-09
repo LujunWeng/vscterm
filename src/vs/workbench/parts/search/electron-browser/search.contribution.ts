@@ -438,13 +438,13 @@ Registry.as<ViewletRegistry>(ViewletExtensions.Viewlets).registerViewlet(new Vie
 	1
 ));
 
-Registry.as<PanelRegistry>(PanelExtensions.Panels).registerPanel(new PanelDescriptor(
-	SearchView,
-	VIEW_ID,
-	nls.localize('name', "Search"),
-	'search',
-	10
-));
+// Registry.as<PanelRegistry>(PanelExtensions.Panels).registerPanel(new PanelDescriptor(
+// 	SearchView,
+// 	VIEW_ID,
+// 	nls.localize('name', "Search"),
+// 	'search',
+// 	10
+// ));
 
 // Register view location updater
 Registry.as<IWorkbenchContributionsRegistry>(WorkbenchExtensions.Workbench).registerWorkbenchContribution(SearchViewLocationUpdater, LifecyclePhase.Restoring);

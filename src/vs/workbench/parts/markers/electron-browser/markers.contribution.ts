@@ -66,14 +66,14 @@ Registry.as<IConfigurationRegistry>(Extensions.Configuration).registerConfigurat
 
 
 // markers panel
-Registry.as<PanelRegistry>(PanelExtensions.Panels).registerPanel(new PanelDescriptor(
-	MarkersPanel,
-	Constants.MARKERS_PANEL_ID,
-	Messages.MARKERS_PANEL_TITLE_PROBLEMS,
-	'markersPanel',
-	10,
-	ToggleMarkersPanelAction.ID
-));
+// Registry.as<PanelRegistry>(PanelExtensions.Panels).registerPanel(new PanelDescriptor(
+// 	MarkersPanel,
+// 	Constants.MARKERS_PANEL_ID,
+// 	Messages.MARKERS_PANEL_TITLE_PROBLEMS,
+// 	'markersPanel',
+// 	10,
+// 	ToggleMarkersPanelAction.ID
+// ));
 
 // actions
 const registry = Registry.as<IWorkbenchActionRegistry>(ActionExtensions.WorkbenchActions);

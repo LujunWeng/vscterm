@@ -97,15 +97,15 @@ const openPanelKb: IKeybindings = {
 };
 
 // register repl panel
-Registry.as<PanelRegistry>(PanelExtensions.Panels).registerPanel(new PanelDescriptor(
-	Repl,
-	REPL_ID,
-	nls.localize({ comment: ['Debug is a noun in this context, not a verb.'], key: 'debugPanel' }, 'Debug Console'),
-	'repl',
-	30,
-	OpenDebugPanelAction.ID
-));
-Registry.as<PanelRegistry>(PanelExtensions.Panels).setDefaultPanelId(REPL_ID);
+// Registry.as<PanelRegistry>(PanelExtensions.Panels).registerPanel(new PanelDescriptor(
+// 	Repl,
+// 	REPL_ID,
+// 	nls.localize({ comment: ['Debug is a noun in this context, not a verb.'], key: 'debugPanel' }, 'Debug Console'),
+// 	'repl',
+// 	30,
+// 	OpenDebugPanelAction.ID
+// ));
+// Registry.as<PanelRegistry>(PanelExtensions.Panels).setDefaultPanelId(REPL_ID);
 
 // Register default debug views
 ViewsRegistry.registerViews([{ id: VARIABLES_VIEW_ID, name: nls.localize('variables', "Variables"), ctor: VariablesView, order: 10, weight: 40, location: ViewLocation.Debug, canToggleVisibility: true }]);

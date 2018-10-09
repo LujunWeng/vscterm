@@ -48,14 +48,14 @@ ModesRegistry.registerLanguage({
 });
 
 // Register Output Panel
-Registry.as<PanelRegistry>(Extensions.Panels).registerPanel(new PanelDescriptor(
-	OutputPanel,
-	OUTPUT_PANEL_ID,
-	nls.localize('output', "Output"),
-	'output',
-	20,
-	ToggleOutputAction.ID
-));
+// Registry.as<PanelRegistry>(Extensions.Panels).registerPanel(new PanelDescriptor(
+// 	OutputPanel,
+// 	OUTPUT_PANEL_ID,
+// 	nls.localize('output', "Output"),
+// 	'output',
+// 	20,
+// 	ToggleOutputAction.ID
+// ));
 
 Registry.as<IEditorRegistry>(EditorExtensions.Editors).registerEditor(
 	new EditorDescriptor(
