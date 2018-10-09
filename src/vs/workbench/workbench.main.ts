@@ -92,30 +92,30 @@ import 'vs/workbench/parts/relauncher/electron-browser/relauncher.contribution';
 
 import 'vs/workbench/parts/tasks/electron-browser/task.contribution';
 
-import 'vs/workbench/parts/emmet/browser/emmet.browser.contribution';
-import 'vs/workbench/parts/emmet/electron-browser/emmet.contribution';
+// import 'vs/workbench/parts/emmet/browser/emmet.browser.contribution';
+// import 'vs/workbench/parts/emmet/electron-browser/emmet.contribution';
 
 // Code Editor enhacements
 import 'vs/workbench/parts/codeEditor/codeEditor.contribution';
 
 import 'vs/workbench/parts/execution/electron-browser/execution.contribution';
 
-import 'vs/workbench/parts/snippets/electron-browser/snippets.contribution';
-import 'vs/workbench/parts/snippets/electron-browser/snippetsService';
-import 'vs/workbench/parts/snippets/electron-browser/insertSnippet';
-import 'vs/workbench/parts/snippets/electron-browser/configureSnippets';
-import 'vs/workbench/parts/snippets/electron-browser/tabCompletion';
+// import 'vs/workbench/parts/snippets/electron-browser/snippets.contribution';
+// import 'vs/workbench/parts/snippets/electron-browser/snippetsService';
+// import 'vs/workbench/parts/snippets/electron-browser/insertSnippet';
+// import 'vs/workbench/parts/snippets/electron-browser/configureSnippets';
+// import 'vs/workbench/parts/snippets/electron-browser/tabCompletion';
 
 import 'vs/workbench/parts/themes/electron-browser/themes.contribution';
 
-import 'vs/workbench/parts/feedback/electron-browser/feedback.contribution';
+// import 'vs/workbench/parts/feedback/electron-browser/feedback.contribution';
 
-import 'vs/workbench/parts/welcome/gettingStarted/electron-browser/gettingStarted.contribution';
+// import 'vs/workbench/parts/welcome/gettingStarted/electron-browser/gettingStarted.contribution';
 
 import 'vs/workbench/parts/update/electron-browser/update.contribution';
 
-import 'vs/workbench/parts/surveys/electron-browser/nps.contribution';
-import 'vs/workbench/parts/surveys/electron-browser/languageSurveys.contribution';
+// import 'vs/workbench/parts/surveys/electron-browser/nps.contribution';
+// import 'vs/workbench/parts/surveys/electron-browser/languageSurveys.contribution';
 
 import 'vs/workbench/parts/performance/electron-browser/performance.contribution';
 
@@ -130,7 +130,7 @@ import 'vs/workbench/parts/themes/test/electron-browser/themes.test.contribution
 
 // import 'vs/workbench/parts/watermark/electron-browser/watermark';
 
-import 'vs/workbench/parts/welcome/overlay/browser/welcomeOverlay';
+// import 'vs/workbench/parts/welcome/overlay/browser/welcomeOverlay';
 
 import 'vs/workbench/parts/outline/electron-browser/outline.contribution';
 
