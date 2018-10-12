@@ -94,32 +94,19 @@ export class WorkbenchLayout extends Disposable implements IVerticalSashLayoutPr
 	) {
 		super();
 
-		// Restore state
-		// this.restorePreviousState();
-
 		// Create layout sashes
-		this.sashXOne = new Sash(this.workbenchContainer, this, { baseSize: 5 });
-		this.sashXTwo = new Sash(this.workbenchContainer, this, { baseSize: 5 });
-		this.sashY = new Sash(this.workbenchContainer, this, { baseSize: 4, orientation: Orientation.HORIZONTAL });
+		// this.sashXOne = new Sash(this.workbenchContainer, this, { baseSize: 5 });
+		// this.sashXTwo = new Sash(this.workbenchContainer, this, { baseSize: 5 });
+		// this.sashY = new Sash(this.workbenchContainer, this, { baseSize: 4, orientation: Orientation.HORIZONTAL });
 
 		this.registerListeners();
-	}
-
-	private restorePreviousState(): void {
-		this._sidebarWidth = Math.max(this.partLayoutInfo.sidebar.minWidth, this.storageService.getInteger(WorkbenchLayout.sashXOneWidthSettingsKey, StorageScope.GLOBAL, DEFAULT_SIDEBAR_PART_WIDTH));
-
-		this._panelWidth = Math.max(this.partLayoutInfo.panel.minWidth, this.storageService.getInteger(WorkbenchLayout.sashXTwoWidthSettingsKey, StorageScope.GLOBAL, DEFAULT_PANEL_PART_SIZE));
-		this._panelHeight = Math.max(this.partLayoutInfo.panel.minHeight, this.storageService.getInteger(WorkbenchLayout.sashYHeightSettingsKey, StorageScope.GLOBAL, DEFAULT_PANEL_PART_SIZE));
-
-		this.panelMaximized = false;
-		this.panelSizeBeforeMaximized = this.storageService.getInteger(WorkbenchLayout.panelSizeBeforeMaximizedKey, StorageScope.GLOBAL, 0);
 	}
 
 	private registerListeners(): void {
 		this._register(this.themeService.onThemeChange(_ => this.layout()));
 		this._register(this.parts.editor.onDidPreferredSizeChange(() => this.onDidPreferredSizeChange()));
 
-		this.registerSashListeners();
+		// this.registerSashListeners();
 	}
 
 	private onDidPreferredSizeChange(): void {
