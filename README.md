@@ -1,8 +1,21 @@
 # VSC Terminal
 Hacking [VS Code](https://github.com/Microsoft/vscode) to make the integrated terminal work as an standalone app.
 
-## Instruction
-### Build and Run
+## Usage
+Similar to the original integrated terminal. `Quick Open` is kept and some commands can be access through it.
+
+For example, if you want to select the default shell in Windows, Press `F1` and Input `Select Default Shell`.
+
+Also, if the terminal does not show up in some cases, Press `F1` and Input `Toggle Integrated Terminal`
+
+The setting file is the same as VS Code.
+```
+Windows: %APPDATA%\vscterm\User\settings.json
+macOS: $HOME/Library/Application Support/vscterm/User/settings.json
+Linux: $HOME/.config/vscterm/User/settings.json
+```
+
+## Build and Run
 Refers to [Code's contribution page](https://github.com/Microsoft/vscode/wiki/How-to-Contribute)
 
 Or, to put it simply:
