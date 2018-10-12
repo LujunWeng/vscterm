@@ -642,59 +642,8 @@ export class Workbench extends Disposable implements IPartService {
 	private restoreParts(): TPromise<IWorkbenchStartedInfo> {
 		const restorePromises: Thenable<any>[] = [];
 
-		// Restore Editorpart
-		// perf.mark('willRestoreEditors');
-		// restorePromises.push(this.editorPart.whenRestored.then(() => {
-		// 	return this.resolveEditorsToOpen().then(inputs => {
-		// 		if (inputs.length) {
-		// 			return this.editorService.openEditors(inputs);
-		// 		}
-
-		// 		return TPromise.as(void 0);
-		// 	});
-		// }).then(() => {
-		// 	perf.mark('didRestoreEditors');
-		// }));
-
-		// Restore Sidebar
-		let viewletIdToRestore: string;
-		// if (!this.sideBarHidden) {
-		// 	this.sideBarVisibleContext.set(true);
-
-		// 	if (this.shouldRestoreLastOpenedViewlet()) {
-		// 		viewletIdToRestore = this.storageService.get(SidebarPart.activeViewletSettingsKey, StorageScope.WORKSPACE);
-		// 	}
-
-		// 	if (!viewletIdToRestore) {
-		// 		viewletIdToRestore = this.viewletService.getDefaultViewletId();
-		// 	}
-
-		// 	perf.mark('willRestoreViewlet');
-		// 	restorePromises.push(this.viewletService.openViewlet(viewletIdToRestore)
-		// 		.then(viewlet => viewlet || this.viewletService.openViewlet(this.viewletService.getDefaultViewletId()))
-		// 		.then(() => {
-		// 			perf.mark('didRestoreViewlet');
-		// 		}));
-		// }
-
-		// Restore Panel
-		// const panelRegistry = Registry.as<PanelRegistry>(PanelExtensions.Panels);
-		// const panelId = this.storageService.get(PanelPart.activePanelSettingsKey, StorageScope.WORKSPACE, panelRegistry.getDefaultPanelId());
-		// if (!this.panelHidden && !!panelId) {
-		// 	restorePromises.push(this.panelPart.openPanel(panelId, false));
-		// }
 		// Panel always displays
-		restorePromises.push(this.panelPart.openPanel(TERMINAL_PANEL_ID, false));
-
-		// Restore Zen Mode if active
-		// if (this.storageService.getBoolean(Workbench.zenModeActiveStorageKey, StorageScope.WORKSPACE, false)) {
-		// 	this.toggleZenMode(true);
-		// }
-
-		// Restore Forced Editor Center Mode
-		// if (this.storageService.getBoolean(Workbench.centeredEditorLayoutActiveStorageKey, StorageScope.WORKSPACE, false)) {
-		// 	this.centeredEditorLayoutActive = true;
-		// }
+		restorePromises.push(this.panelPart.openPanel(TERMINAL_PANEL_ID, true));
 
 		const onRestored = (error?: Error): IWorkbenchStartedInfo => {
 			this.workbenchCreated = true;
@@ -706,7 +655,7 @@ export class Workbench extends Disposable implements IPartService {
 			return {
 				customKeybindingsCount: this.keybindingService.customKeybindingsCount(),
 				pinnedViewlets: this.activitybarPart.getPinned(),
-				restoredViewlet: viewletIdToRestore,
+				restoredViewlet: null,
 				restoredEditorsCount: this.editorService.visibleEditors.length
 			};
 		};
