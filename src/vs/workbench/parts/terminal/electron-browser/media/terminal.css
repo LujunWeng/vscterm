@@ -33,12 +33,13 @@
 	bottom: 2px; /* Matches padding-bottom on .terminal-outer-container */
 	top: 0;
 }
-.monaco-workbench .panel.integrated-terminal .monaco-split-view2.horizontal .split-view-view:first-child .terminal-wrapper {
+
+/* .monaco-workbench .panel.integrated-terminal .monaco-split-view2.horizontal .split-view-view:first-child .terminal-wrapper {
 	margin-left: 20px;
 }
 .monaco-workbench .panel.integrated-terminal .monaco-split-view2.horizontal .split-view-view:last-child .terminal-wrapper {
 	margin-right: 20px;
-}
+} */
 
 .monaco-workbench .panel.integrated-terminal .xterm a:not(.xterm-invalid-link) {
 	/* To support message box sizing */
@@ -52,9 +53,9 @@
 .monaco-workbench .panel.integrated-terminal .xterm-viewport {
 	margin-right: -10px;
 }
-.monaco-workbench .panel.integrated-terminal .monaco-split-view2.horizontal .split-view-view:last-child .xterm-viewport {
+/* .monaco-workbench .panel.integrated-terminal .monaco-split-view2.horizontal .split-view-view:last-child .xterm-viewport {
 	margin-right: -20px;
-}
+} */
 
 .monaco-workbench .panel.integrated-terminal canvas {
 	/* Align the viewport and canvases to the bottom of the panel */
@@ -106,6 +107,8 @@
 	left: 0;
 	user-select: none;
 }
+
+
 .monaco-workbench .panel.integrated-terminal .monaco-split-view2.vertical .split-view-view:not(:last-child) .xterm {
 	/* When vertical and NOT the bottom terminal, align to the top instead to prevent the output jumping around erratically */
 	top: 0;
