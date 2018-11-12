@@ -25,9 +25,14 @@
 	border-top-style: solid;
 }
 
-.monaco-workbench > .part.panel.right {
+/* .monaco-workbench > .part.panel.right {
 	border-left-width: 1px;
 	border-left-style: solid;
+} */
+
+.monaco-workbench > .part.panel.right .title {
+	border-top-width: 1px;
+	border-top-style: solid;
 }
 
 .monaco-workbench > .part.panel > .title > .title-actions .monaco-action-bar .action-item .action-label {
