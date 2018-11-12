@@ -501,12 +501,12 @@ gulp.task('upload-vscode-configuration', ['generate-vscode-configuration'], () =
 });
 
 function getSettingsSearchBuildId(packageJson) {
-	const previous = util.getPreviousVersion(packageJson.version);
+	const previous = util.getPreviousVersion(packageJson['version-based']);
 
 	try {
 		const out = cp.execSync(`git rev-list ${previous}..HEAD --count`);
 		const count = parseInt(out.toString());
-		return util.versionStringToNumber(packageJson.version) * 1e4 + count;
+		return util.versionStringToNumber(packageJson['version-based']) * 1e4 + count;
 	} catch (e) {
 		throw new Error('Could not determine build number: ' + e.toString());
 	}
