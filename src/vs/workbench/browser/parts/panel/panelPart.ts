@@ -256,15 +256,17 @@ export class PanelPart extends CompositePart<Panel> implements IPanelService {
 		return sizes;
 	}
 
+	/* The content of this method is commented off for
+	 * removing titles temporarily */
 	private layoutCompositeBar(): void {
-		if (this.dimension) {
-			let availableWidth = this.dimension.width - 40; // take padding into account
-			if (this.toolBar) {
-				// adjust height for global actions showing
-				availableWidth = Math.max(PanelPart.MIN_COMPOSITE_BAR_WIDTH, availableWidth - this.getToolbarWidth());
-			}
-			this.compositeBar.layout(new Dimension(availableWidth, this.dimension.height));
-		}
+		// if (this.dimension) {
+		// 	let availableWidth = this.dimension.width - 40; // take padding into account
+		// 	if (this.toolBar) {
+		// 		// adjust height for global actions showing
+		// 		availableWidth = Math.max(PanelPart.MIN_COMPOSITE_BAR_WIDTH, availableWidth - this.getToolbarWidth());
+		// 	}
+		// 	this.compositeBar.layout(new Dimension(availableWidth, this.dimension.height));
+		// }
 	}
 
 	private getCompositeActions(compositeId: string): { activityAction: PanelActivityAction, pinnedAction: ToggleCompositePinnedAction } {
